@@ -13,6 +13,7 @@
 		9D6CF9522936E33E00E31486 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D6CF9502936E33E00E31486 /* Main.storyboard */; };
 		9D6CF9542936E33F00E31486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D6CF9532936E33F00E31486 /* Assets.xcassets */; };
 		9D6CF9572936E33F00E31486 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D6CF9552936E33F00E31486 /* LaunchScreen.storyboard */; };
+		9D6CF95F2936E4DC00E31486 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6CF95E2936E4DC00E31486 /* AddLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		9D6CF9532936E33F00E31486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D6CF9562936E33F00E31486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D6CF9582936E33F00E31486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D6CF95E2936E4DC00E31486 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				9D6CF9532936E33F00E31486 /* Assets.xcassets */,
 				9D6CF9552936E33F00E31486 /* LaunchScreen.storyboard */,
 				9D6CF9582936E33F00E31486 /* Info.plist */,
+				9D6CF95E2936E4DC00E31486 /* AddLocationViewController.swift */,
 			);
 			path = "INFO-6125-Project-2";
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				9D6CF94F2936E33E00E31486 /* ViewController.swift in Sources */,
 				9D6CF94B2936E33E00E31486 /* AppDelegate.swift in Sources */,
 				9D6CF94D2936E33E00E31486 /* SceneDelegate.swift in Sources */,
+				9D6CF95F2936E4DC00E31486 /* AddLocationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
