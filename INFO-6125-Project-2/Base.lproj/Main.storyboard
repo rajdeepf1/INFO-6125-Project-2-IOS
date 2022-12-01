@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,9 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ox4-kk-tbj">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ox4-kk-tbj">
                                 <rect key="frame" x="0.0" y="774" width="393" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="yav-Yi-EO4"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="09z-wU-Hqt"/>
                                     <barButtonItem title="Add Location" id="67h-Bb-wVi">
@@ -28,17 +31,33 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pSU-7c-29j">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="427"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="427" id="WwZ-dx-B7A"/>
+                                </constraints>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pSU-7c-29j" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="IGW-g7-NWV"/>
+                            <constraint firstItem="pSU-7c-29j" firstAttribute="trailing" secondItem="ox4-kk-tbj" secondAttribute="trailing" id="KqC-cf-i6S"/>
+                            <constraint firstItem="ox4-kk-tbj" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="KvM-UY-XTe"/>
+                            <constraint firstItem="pSU-7c-29j" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qqu-nq-CCS"/>
+                            <constraint firstItem="pSU-7c-29j" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Uoh-rL-iJc"/>
+                            <constraint firstItem="pSU-7c-29j" firstAttribute="leading" secondItem="ox4-kk-tbj" secondAttribute="leading" id="jpe-se-bfc"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="mapView" destination="pSU-7c-29j" id="EKM-Ug-V8W"/>
                         <segue destination="YY7-kX-GtN" kind="show" identifier="goToAddLocation" id="uDg-oC-IvT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-10" y="-2"/>
+            <point key="canvasLocation" x="-11.450381679389313" y="-2.1126760563380285"/>
         </scene>
         <!--Add Location View Controller-->
         <scene sceneID="Av9-xQ-P1X">
