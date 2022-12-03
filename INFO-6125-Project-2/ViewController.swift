@@ -12,12 +12,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var mapView:MKMapView!
     private let locationManager = CLLocationManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         locationManager.requestWhenInUseAuthorization()
-
+        
         setupMap()
         addAnnotation(location: getLocation())
     }
@@ -43,17 +43,17 @@ class ViewController: UIViewController {
         // control zooming
         let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 100000)
         mapView.setCameraZoomRange(zoomRange, animated: true)
-            
-        }
+        
+    }
     
     private func addAnnotation(location: CLLocation) {
         let annotation = MyAnnotation(coordinate: location.coordinate, title: "My Title", subtitle:"A lovely subtitle here", glyphText:"F")
         mapView.addAnnotation (annotation)
-      }
+    }
     
     private func getLocation() -> CLLocation{
-            return CLLocation(latitude: 43.0130, longitude: -81.1994)
-        }
+        return CLLocation(latitude: 43.0130, longitude: -81.1994)
+    }
     
     
     
@@ -75,12 +75,8 @@ extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "myIdentifier"
         
-        //added this line from else part
         var view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        
-//commented this part to avoid redeclaration
-        
-        //var view: MKMarkerAnnotationView
+                
         // check to see if we have a view we can reuse
         if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView{
             // get updated annotation
@@ -89,7 +85,7 @@ extension ViewController: MKMapViewDelegate {
             view = dequeuedView
         }
         else{
-//            let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+         
             view.canShowCallout = true
             
             // set the position of the callout
@@ -120,39 +116,39 @@ extension ViewController: MKMapViewDelegate {
             }
             
         }
-            return view
-        }
+        return view
+    }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print ("Button clicked \(control.tag)")
         guard let coordinates = view.annotation?.coordinate
         else {
-        return
+            return
         }
         
         
         
         let launchOptions = [
-        MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking
         ]
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinates) )
         mapItem.openInMaps (launchOptions: launchOptions)
     }
     
-    }
+}
 
-    class MyAnnotation: NSObject, MKAnnotation
+class MyAnnotation: NSObject, MKAnnotation
+{
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+    var glyphText: String?
+    init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil)
     {
-        var coordinate: CLLocationCoordinate2D
-        var title: String?
-        var subtitle: String?
-        var glyphText: String?
-        init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil)
-        {
-            self.coordinate = coordinate
-            self.title = title
-            self.subtitle = subtitle
-            self.glyphText = glyphText
-            super.init()
-        }
+        self.coordinate = coordinate
+        self.title = title
+        self.subtitle = subtitle
+        self.glyphText = glyphText
+        super.init()
     }
+}
