@@ -67,7 +67,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     private func addAnnotation(location: CLLocation,weatherResponse:WeatherResponse) {
-        let annotation = MyAnnotation(coordinate: location.coordinate, title: "Your current location", subtitle:"A lovely subtitle here", glyphText:"\(weatherResponse.current.temp_c)")
+        let annotation = MyAnnotation(coordinate: location.coordinate, title: weatherResponse.current.condition.text, subtitle:"Current: \(weatherResponse.current.temp_c) & Feels Like:\(weatherResponse.current.feelslike_c)", glyphText:"\(weatherResponse.current.temp_c)",        code: weatherResponse.current.condition.code
+        )
+        
         mapView.addAnnotation (annotation)
     }
     
@@ -115,7 +117,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 self.weatherResponseGlobal = weatherResponse
                 DispatchQueue.main.async {
-                   
+                    
                     
                     self.addAnnotation(location:location,weatherResponse:weatherResponse)
                     
@@ -154,7 +156,87 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         return weather
     }
+    
+    private func displayWeatherImage(code: Int)-> String {
         
+        print(code)
+        
+        var imageStr : String = ""
+        
+        switch code {
+        case 0:
+            imageStr = "exclamationmark.triangle"
+            break
+        case 1000:
+            imageStr = "sun.max"
+            break
+        case 1003:
+            imageStr = "cloud.sun.circle.fill"
+            break
+        case 1006:
+            imageStr = "cloud.sun"
+            break
+        case 1009:
+            imageStr = "cloud"
+            break
+        case 1030:
+            imageStr = "smoke.fill"
+            break
+        case 1063:
+            imageStr = "cloud.sun.rain.circle"
+            break
+        case 1066:
+            imageStr = "cloud.snow"
+            break
+        case 1069:
+            imageStr = "cloud.sleet"
+            break
+        case 1072:
+            imageStr = "cloud.drizzle.circle.fill"
+            break
+        case 1087:
+            imageStr = "cloud.bolt.rain"
+            break
+        case 1114:
+            imageStr = "cloud.snow"
+            break
+        case 1117:
+            imageStr = "cloud.rain.circle"
+            break
+        case 1135:
+            imageStr = "cloud.fog"
+            break
+        case 1147:
+            imageStr = "cloud.fog"
+            break
+        case 1150:
+            imageStr =  "cloud.sun.rain.fill"
+            break
+        case 1153:
+            imageStr =  "cloud.sun.rain.fill"
+            break
+        case 1168:
+            imageStr =  "cloud.snow.circle"
+            break
+        case 1183:
+            imageStr =  "cloud.rain"
+            break
+        case 1213:
+            imageStr =  "snowflake.circle"
+            break
+        case 1189 | 1192 | 1195 :
+            imageStr =  "cloud.rain.circle.fill"
+            break
+        default:
+            print("No Data Found")
+            imageStr =  "exclamationmark.triangle"
+            break
+        }
+        
+        return imageStr
+        
+    }
+    
     
 }
 
@@ -185,16 +267,12 @@ extension ViewController: MKMapViewDelegate {
             button.tag = 100
             view.rightCalloutAccessoryView = button
             
-            // add an image to left side of callout
-            
-            let image = UIImage (systemName: "graduationcap.circle.fill")
-            view.leftCalloutAccessoryView = UIImageView(image: image)
             
             
             // change colour of accessories
             
             view.tintColor = UIColor.systemRed
-            
+            // TODO change colors
             if let myAnnotation = annotation as? MyAnnotation {
                 view.glyphText = myAnnotation.glyphText
                 // change colour of pin/marker
@@ -202,27 +280,35 @@ extension ViewController: MKMapViewDelegate {
                 let numberFormatter = NumberFormatter()
                 let number = numberFormatter.number(from: myAnnotation.glyphText ?? "0.0")
                 let numberFloatValue = number?.floatValue ?? 0.0
-                                            
+                
                 
                 if (numberFloatValue >= 35.0) {
                     view.markerTintColor = UIColor.systemRed // dark red
-
+                    
                 }else if (numberFloatValue >= 25.0 && numberFloatValue <= 30.0) {
                     view.markerTintColor = UIColor.red
-
+                    
                 }else if (numberFloatValue >= 17.0 && numberFloatValue <= 24.0) {
                     view.markerTintColor = UIColor.orange
-
+                    
                 }else if (numberFloatValue >= 12.0 && numberFloatValue <= 16.0) {
                     view.markerTintColor = UIColor.blue
-
+                    
                 }else if (numberFloatValue >= 0.0 && numberFloatValue <= 11.0) {
                     view.markerTintColor = UIColor.systemBlue
                 }
                 else if (numberFloatValue < 0.0 ){
                     view.markerTintColor = UIColor.purple
-
+                    
                 }
+                
+                
+                // add an image to left side of callout
+                
+                let weatherImg = displayWeatherImage(code: myAnnotation.code)
+                
+                let image = UIImage (systemName: weatherImg)
+                view.leftCalloutAccessoryView = UIImageView(image: image)
                 
             }
             
@@ -254,12 +340,14 @@ class MyAnnotation: NSObject, MKAnnotation
     var title: String?
     var subtitle: String?
     var glyphText: String?
-    init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil)
+    var code: Int
+    init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil, code:Int)
     {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.glyphText = glyphText
+        self.code = code
         super.init()
     }
 }
@@ -281,6 +369,8 @@ struct WeatherCondition : Decodable{
 struct Weather:Decodable {
     let temp_c: Float
     let temp_f: Float
+    let feelslike_c: Float
+    
     let condition: WeatherCondition
 }
 
