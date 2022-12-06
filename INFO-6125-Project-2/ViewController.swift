@@ -14,6 +14,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private var locationManager: CLLocationManager!
     private var currentLocation: CLLocation?
     var weatherResponseGlobal : WeatherResponse? = nil
+    var latitude: String = ""
+    var longitude: String = ""
     
     
     override func viewDidLoad() {
@@ -88,6 +90,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func loadWeather(location: CLLocation) {
         
         let search: String? = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
+        
+        latitude = "\(location.coordinate.latitude)"
+        longitude = "\(location.coordinate.longitude)"
         
         guard let search = search else {
             return
@@ -241,7 +246,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "goToDetailScreen") {
           let detailScreen = segue.destination as! DetailScreenViewController
-           detailScreen.locationName = (weatherResponseGlobal?.location.name)! as String
+           detailScreen.latitude = (latitude) as String
+           detailScreen.longitude = (longitude) as String
+
        }
     }
     
@@ -275,11 +282,6 @@ extension ViewController: MKMapViewDelegate {
             view.rightCalloutAccessoryView = button
             
             
-            
-            // change colour of accessories
-            
-            view.tintColor = UIColor.systemRed
-            // TODO change colors
             if let myAnnotation = annotation as? MyAnnotation {
                 view.glyphText = myAnnotation.glyphText
                 // change colour of pin/marker
@@ -291,22 +293,23 @@ extension ViewController: MKMapViewDelegate {
                 
                 if (numberFloatValue >= 35.0) {
                     view.markerTintColor = UIColor.systemRed // dark red
-                    
+                    view.tintColor = UIColor.systemRed
                 }else if (numberFloatValue >= 25.0 && numberFloatValue <= 30.0) {
                     view.markerTintColor = UIColor.red
-                    
+                    view.tintColor = UIColor.red
                 }else if (numberFloatValue >= 17.0 && numberFloatValue <= 24.0) {
                     view.markerTintColor = UIColor.orange
-                    
+                    view.tintColor = UIColor.orange
                 }else if (numberFloatValue >= 12.0 && numberFloatValue <= 16.0) {
                     view.markerTintColor = UIColor.blue
-                    
+                    view.tintColor = UIColor.blue
                 }else if (numberFloatValue >= 0.0 && numberFloatValue <= 11.0) {
                     view.markerTintColor = UIColor.systemBlue
+                    view.tintColor = UIColor.systemBlue
                 }
                 else if (numberFloatValue < 0.0 ){
                     view.markerTintColor = UIColor.purple
-                    
+                    view.tintColor = UIColor.purple
                 }
                 
                 
