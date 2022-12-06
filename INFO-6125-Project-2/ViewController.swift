@@ -16,7 +16,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var weatherResponseGlobal : WeatherResponse? = nil
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -67,12 +66,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     private func addAnnotation(location: CLLocation,weatherResponse:WeatherResponse) {
-        let annotation = MyAnnotation(coordinate: location.coordinate, title: weatherResponse.current.condition.text, subtitle:"Current: \(weatherResponse.current.temp_c) & Feels Like:\(weatherResponse.current.feelslike_c)", glyphText:"\(weatherResponse.current.temp_c)",        code: weatherResponse.current.condition.code
+        let annotation = MyAnnotation(coordinate: location.coordinate, title: weatherResponse.current.condition.text, subtitle:"Current: \(weatherResponse.current.temp_c) & Feels Like:\(weatherResponse.current.feelslike_c)", glyphText:"\(weatherResponse.current.temp_c)",        code: weatherResponse.current.condition.code,
+                                      weatherObject: weatherResponse
         )
         
         mapView.addAnnotation (annotation)
     }
     
+   
     
     
     @IBAction func onAddLocationButtonPressed(_ sender: Any) {
@@ -137,7 +138,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private func getURL (query: String) -> URL? {
         let baseUrl = "https://api.weatherapi.com/v1/"
         let currentEndpoint = "current.json"
-        let apiKey = "c67149dd82f9438e86f31545222111"
+        let apiKey = "e7d47e9bff3e46bebb9220627220512"
         guard let url = "\(baseUrl)\(currentEndpoint)?key=\(apiKey)&q=\(query)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
             return nil
@@ -237,6 +238,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if (segue.identifier == "goToDetailScreen") {
+          let detailScreen = segue.destination as! DetailScreenViewController
+           detailScreen.locationName = (weatherResponseGlobal?.location.name)! as String
+       }
+    }
     
 }
 
@@ -310,6 +317,7 @@ extension ViewController: MKMapViewDelegate {
                 let image = UIImage (systemName: weatherImg)
                 view.leftCalloutAccessoryView = UIImageView(image: image)
                 
+                
             }
             
         }
@@ -318,19 +326,12 @@ extension ViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print ("Button clicked \(control.tag)")
-        guard let coordinates = view.annotation?.coordinate
-        else {
-            return
-        }
+
+        performSegue(withIdentifier: "goToDetailScreen", sender: self)
         
-        
-        
-        let launchOptions = [
-            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking
-        ]
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinates) )
-        mapItem.openInMaps (launchOptions: launchOptions)
+
     }
+   
     
 }
 
@@ -341,13 +342,15 @@ class MyAnnotation: NSObject, MKAnnotation
     var subtitle: String?
     var glyphText: String?
     var code: Int
-    init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil, code:Int)
+    var weatherObject: WeatherResponse
+    init (coordinate: CLLocationCoordinate2D, title: String, subtitle: String, glyphText: String? = nil, code:Int, weatherObject: WeatherResponse)
     {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
         self.glyphText = glyphText
         self.code = code
+        self.weatherObject = weatherObject
         super.init()
     }
 }
