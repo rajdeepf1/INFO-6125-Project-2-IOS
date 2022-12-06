@@ -36,7 +36,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         // Check for Location Services
-        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
@@ -75,13 +74,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.addAnnotation (annotation)
     }
     
-   
+    
     
     
     @IBAction func onAddLocationButtonPressed(_ sender: Any) {
-        
-        print("hi")
-        
+                
         performSegue(withIdentifier: "goToAddLocation", sender: self)
         
     }
@@ -244,12 +241,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if (segue.identifier == "goToDetailScreen") {
-          let detailScreen = segue.destination as! DetailScreenViewController
-           detailScreen.latitude = (latitude) as String
-           detailScreen.longitude = (longitude) as String
-
-       }
+        if (segue.identifier == "goToDetailScreen") {
+            let detailScreen = segue.destination as! DetailScreenViewController
+            detailScreen.latitude = (latitude) as String
+            detailScreen.longitude = (longitude) as String
+            
+        }
     }
     
 }
@@ -329,12 +326,12 @@ extension ViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print ("Button clicked \(control.tag)")
-
+        
         performSegue(withIdentifier: "goToDetailScreen", sender: self)
         
-
+        
     }
-   
+    
     
 }
 

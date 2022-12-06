@@ -86,7 +86,7 @@ class DetailScreenViewController: UIViewController{
                         .systemGray4, .systemYellow
                     ])
                     self.weatherImage.preferredSymbolConfiguration=config
-                    var systemImg: String = self.displayWeatherImage(code: weatherResponse.current.condition.code)
+                    let systemImg: String = self.displayWeatherImage(code: weatherResponse.current.condition.code)
                     self.weatherImage.image = UIImage(systemName:systemImg)
                     
                 }
@@ -283,7 +283,7 @@ extension DetailScreenViewController : UITableViewDataSource{
         
         content.secondaryText = "\(item.day.avgtemp_c) C°"
         
-        var systemImg: String = self.displayWeatherImage(code: item.day.condition.code)
+        let systemImg: String = self.displayWeatherImage(code: item.day.condition.code)
         
         content.image = UIImage(systemName: systemImg)
         
