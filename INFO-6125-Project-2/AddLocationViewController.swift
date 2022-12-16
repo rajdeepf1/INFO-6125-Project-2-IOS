@@ -66,54 +66,6 @@ class AddLocationViewController: UIViewController,CLLocationManagerDelegate,UITe
         
         self.weatherConditionImage.image = UIImage(systemName:displayWeatherImageString(code: code))
         
-//        switch code {
-//        case 0:
-//            self.weatherConditionImage.image = UIImage(systemName:"exclamationmark.triangle")
-//
-//        case 1000:
-//            weatherConditionImage.image = UIImage (systemName: "sun.max")
-//        case 1003:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.circle.fill")
-//        case 1006:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sun")
-//        case 1009:
-//            weatherConditionImage.image = UIImage (systemName: "cloud")
-//        case 1030:
-//            weatherConditionImage.image = UIImage (systemName: "smoke.fill")
-//        case 1063:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.circle")
-//        case 1066:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
-//        case 1069:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sleet")
-//        case 1072:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.drizzle.circle.fill")
-//        case 1087:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.bolt.rain")
-//        case 1114:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
-//        case 1117:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle")
-//        case 1135:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
-//        case 1147:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
-//        case 1150:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
-//        case 1153:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
-//        case 1168:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.snow.circle")
-//        case 1183:
-//            weatherConditionImage.image = UIImage (systemName: "cloud.rain")
-//        case 1189 | 1192 | 1195 :
-//            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle.fill")
-//
-//        default:
-//            print("No Data Found")
-//            self.weatherConditionImage.image = UIImage (systemName: "exclamationmark.trianglel")
-//        }
-        
         
     }
     
