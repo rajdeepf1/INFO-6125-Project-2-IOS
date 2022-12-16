@@ -26,6 +26,9 @@ class AddLocationViewController: UIViewController,CLLocationManagerDelegate,UITe
     
     private let locationManager = CLLocationManager()
     
+    let defaults = UserDefaults.standard
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,54 +64,136 @@ class AddLocationViewController: UIViewController,CLLocationManagerDelegate,UITe
         
         print(code)
         
+        self.weatherConditionImage.image = UIImage(systemName:displayWeatherImageString(code: code))
+        
+//        switch code {
+//        case 0:
+//            self.weatherConditionImage.image = UIImage(systemName:"exclamationmark.triangle")
+//
+//        case 1000:
+//            weatherConditionImage.image = UIImage (systemName: "sun.max")
+//        case 1003:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.circle.fill")
+//        case 1006:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sun")
+//        case 1009:
+//            weatherConditionImage.image = UIImage (systemName: "cloud")
+//        case 1030:
+//            weatherConditionImage.image = UIImage (systemName: "smoke.fill")
+//        case 1063:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.circle")
+//        case 1066:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
+//        case 1069:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sleet")
+//        case 1072:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.drizzle.circle.fill")
+//        case 1087:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.bolt.rain")
+//        case 1114:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
+//        case 1117:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle")
+//        case 1135:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
+//        case 1147:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
+//        case 1150:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
+//        case 1153:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
+//        case 1168:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.snow.circle")
+//        case 1183:
+//            weatherConditionImage.image = UIImage (systemName: "cloud.rain")
+//        case 1189 | 1192 | 1195 :
+//            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle.fill")
+//
+//        default:
+//            print("No Data Found")
+//            self.weatherConditionImage.image = UIImage (systemName: "exclamationmark.trianglel")
+//        }
+        
+        
+    }
+    
+    private func displayWeatherImageString(code: Int)-> String {
+        
+        print(code)
+        
+        var imageStr : String = ""
+        
         switch code {
         case 0:
-            self.weatherConditionImage.image = UIImage(systemName:"exclamationmark.triangle")
-            
+            imageStr = "exclamationmark.triangle"
+            break
         case 1000:
-            weatherConditionImage.image = UIImage (systemName: "sun.max")
+            imageStr = "sun.max"
+            break
         case 1003:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sun.circle.fill")
+            imageStr = "cloud.sun.circle.fill"
+            break
         case 1006:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sun")
+            imageStr = "cloud.sun"
+            break
         case 1009:
-            weatherConditionImage.image = UIImage (systemName: "cloud")
+            imageStr = "cloud"
+            break
         case 1030:
-            weatherConditionImage.image = UIImage (systemName: "smoke.fill")
+            imageStr = "smoke.fill"
+            break
         case 1063:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.circle")
+            imageStr = "cloud.sun.rain.circle"
+            break
         case 1066:
-            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
+            imageStr = "cloud.snow"
+            break
         case 1069:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sleet")
+            imageStr = "cloud.sleet"
+            break
         case 1072:
-            weatherConditionImage.image = UIImage (systemName: "cloud.drizzle.circle.fill")
+            imageStr = "cloud.drizzle.circle.fill"
+            break
         case 1087:
-            weatherConditionImage.image = UIImage (systemName: "cloud.bolt.rain")
+            imageStr = "cloud.bolt.rain"
+            break
         case 1114:
-            weatherConditionImage.image = UIImage (systemName: "cloud.snow")
+            imageStr = "cloud.snow"
+            break
         case 1117:
-            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle")
+            imageStr = "cloud.rain.circle"
+            break
         case 1135:
-            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
+            imageStr = "cloud.fog"
+            break
         case 1147:
-            weatherConditionImage.image = UIImage (systemName: "cloud.fog")
+            imageStr = "cloud.fog"
+            break
         case 1150:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
+            imageStr =  "cloud.sun.rain.fill"
+            break
         case 1153:
-            weatherConditionImage.image = UIImage (systemName: "cloud.sun.rain.fill")
+            imageStr =  "cloud.sun.rain.fill"
+            break
         case 1168:
-            weatherConditionImage.image = UIImage (systemName: "cloud.snow.circle")
+            imageStr =  "cloud.snow.circle"
+            break
         case 1183:
-            weatherConditionImage.image = UIImage (systemName: "cloud.rain")
+            imageStr =  "cloud.rain"
+            break
+        case 1213:
+            imageStr =  "snowflake.circle"
+            break
         case 1189 | 1192 | 1195 :
-            weatherConditionImage.image = UIImage (systemName: "cloud.rain.circle.fill")
-            
+            imageStr =  "cloud.rain.circle.fill"
+            break
         default:
             print("No Data Found")
-            self.weatherConditionImage.image = UIImage (systemName: "exclamationmark.trianglel")
+            imageStr =  "exclamationmark.triangle"
+            break
         }
         
+        return imageStr
         
     }
     
@@ -229,12 +314,18 @@ class AddLocationViewController: UIViewController,CLLocationManagerDelegate,UITe
             }
         
         }
-       
     
+    func getDataFromLocalStorage() -> String {
+        guard let getData = defaults.string(forKey: "API_KEY_DATA") else { return "" }
+                
+        return getData
+    }
+       
+    // api_key = e7d47e9bff3e46bebb9220627220512
     private func getURL (query: String) -> URL? {
         let baseUrl = "https://api.weatherapi.com/v1/"
         let currentEndpoint = "current.json"
-        let apiKey = "e7d47e9bff3e46bebb9220627220512"
+        let apiKey = getDataFromLocalStorage()
         guard let url = "\(baseUrl)\(currentEndpoint)?key=\(apiKey)&q=\(query)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
             return nil

@@ -22,6 +22,8 @@ class DetailScreenViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var forecastArray:[ForecastDayDetailScreen] = []
+    let defaults = UserDefaults.standard
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,10 +152,16 @@ class DetailScreenViewController: UIViewController{
         
     }
     
+    func getDataFromLocalStorage() -> String {
+        guard let getData = defaults.string(forKey: "API_KEY_DATA") else { return "" }
+                
+        return getData
+    }
+    // api_key = e7d47e9bff3e46bebb9220627220512
     private func getURL (query: String,days: Int) -> URL? {
         let baseUrl = "https://api.weatherapi.com/v1/"
         let currentEndpoint = "forecast.json"
-        let apiKey = "e7d47e9bff3e46bebb9220627220512"
+        let apiKey = getDataFromLocalStorage()
         guard let url = "\(baseUrl)\(currentEndpoint)?key=\(apiKey)&q=\(query)&days=\(days)&aqi=no&alerts=no"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
             return nil

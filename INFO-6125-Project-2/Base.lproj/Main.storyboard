@@ -3,13 +3,14 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Title-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="INFO_6125_Project_2" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,6 +24,18 @@
                                     <constraint firstAttribute="height" constant="44" id="yav-Yi-EO4"/>
                                 </constraints>
                                 <items>
+                                    <barButtonItem title="Item" id="v5o-sW-rBF">
+                                        <imageReference key="image" image="key" catalog="system" renderingMode="hierarchical">
+                                            <hierarchicalColors>
+                                                <color systemColor="systemYellowColor"/>
+                                                <color systemColor="systemYellowColor"/>
+                                                <color systemColor="systemYellowColor"/>
+                                            </hierarchicalColors>
+                                        </imageReference>
+                                        <connections>
+                                            <action selector="onApiKeyPressed:" destination="BYZ-38-t0r" id="DGC-6j-T7d"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="09z-wU-Hqt"/>
                                     <barButtonItem title="Add Location" id="67h-Bb-wVi">
                                         <connections>
@@ -50,6 +63,7 @@
                             <constraint firstItem="pSU-7c-29j" firstAttribute="leading" secondItem="ox4-kk-tbj" secondAttribute="leading" id="jpe-se-bfc"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="XZn-U8-C0t"/>
                     <connections>
                         <outlet property="mapView" destination="pSU-7c-29j" id="EKM-Ug-V8W"/>
                         <segue destination="YY7-kX-GtN" kind="show" identifier="goToAddLocation" id="uDg-oC-IvT"/>
@@ -346,10 +360,14 @@
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="104"/>
+        <image name="key" catalog="system" width="85" height="128"/>
         <image name="location.fill.viewfinder" catalog="system" width="128" height="115"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

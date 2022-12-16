@@ -16,7 +16,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var weatherResponseGlobal : WeatherResponse? = nil
     var latitude: String = ""
     var longitude: String = ""
-    
+    let defaults = UserDefaults.standard
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +42,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
         }
-        
+                
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -57,7 +59,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 100000)
                 mapView.setCameraZoomRange(zoomRange, animated: true)
                 mapView.setRegion(viewRegion, animated: true)
-                
+                        latitude = "\(userLocation.coordinate.latitude)"
+                        longitude = "\(userLocation.coordinate.longitude)"
                 loadWeather(location: userLocation)
                 
                 
@@ -75,21 +78,54 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    
-    
     @IBAction func onAddLocationButtonPressed(_ sender: Any) {
                 
         performSegue(withIdentifier: "goToAddLocation", sender: self)
         
     }
     
+    @IBAction func onApiKeyPressed(_ sender: Any) {
+       
+        let alertController = UIAlertController(title: "Add New API Key", message: "Please add new API Key", preferredStyle: .alert)
+        
+        alertController.addTextField { textField in
+        textField.placeholder = "Enter New API Key"
+        }
+    
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        alertController.addAction(UIAlertAction(title: "Save", style: .default) {action in
+            if let apiTextField = alertController.textFields?[0] as? UITextField {
+                let apiKey = apiTextField.text!
+                self.saveDataToLocalStorage(apiKey: apiKey)
+                self.loadWeather(location: CLLocation(latitude: Double(self.latitude)!, longitude: Double(self.longitude)!))
+            }
+        })
+        
+        self.present(alertController, animated: true)
+                                                
+    }
+    
+    func saveDataToLocalStorage(apiKey : String)  {
+        
+        defaults.set(apiKey, forKey: "API_KEY_DATA")
+        
+    }
+    
+    func getDataFromLocalStorage() -> String {
+        guard let getData = defaults.string(forKey: "API_KEY_DATA") else { return "" }
+                
+        return getData
+    }
+    
+    
     // load weather api
     func loadWeather(location: CLLocation) {
         
         let search: String? = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
         
-        latitude = "\(location.coordinate.latitude)"
-        longitude = "\(location.coordinate.longitude)"
+//        latitude = "\(location.coordinate.latitude)"
+//        longitude = "\(location.coordinate.longitude)"
         
         guard let search = search else {
             return
@@ -136,11 +172,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         dataTask.resume();
         
     }
-    
+    // api_key = e7d47e9bff3e46bebb9220627220512
     private func getURL (query: String) -> URL? {
         let baseUrl = "https://api.weatherapi.com/v1/"
         let currentEndpoint = "current.json"
-        let apiKey = "e7d47e9bff3e46bebb9220627220512"
+        let apiKey = getDataFromLocalStorage()
         guard let url = "\(baseUrl)\(currentEndpoint)?key=\(apiKey)&q=\(query)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
             return nil
